@@ -12,33 +12,33 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Result<T> implements Serializable {
+public class BaseRes<T> implements Serializable {
 
-    private T datas;
-    private Integer resp_code;
-    private String resp_msg;
+    private T data;
+    private Integer status;
+    private String msg;
 
-    public static <T> Result<T> succeed(String msg) {
+    public static <T> BaseRes<T> ok(String msg) {
         return of(null, CodeEnum.SUCCESS.getCode(), msg);
     }
 
-    public static <T> Result<T> succeed(T model, String msg) {
+    public static <T> BaseRes<T> ok(T model, String msg) {
         return of(model, CodeEnum.SUCCESS.getCode(), msg);
     }
 
-    public static <T> Result<T> succeed(T model) {
+    public static <T> BaseRes<T> ok(T model) {
         return of(model, CodeEnum.SUCCESS.getCode(), "");
     }
 
-    public static <T> Result<T> of(T datas, Integer code, String msg) {
-        return new Result<>(datas, code, msg);
+    public static <T> BaseRes<T> of(T datas, Integer code, String msg) {
+        return new BaseRes<>(datas, code, msg);
     }
 
-    public static <T> Result<T> failed(String msg) {
+    public static <T> BaseRes<T> err(String msg) {
         return of(null, CodeEnum.ERROR.getCode(), msg);
     }
 
-    public static <T> Result<T> failed(T model, String msg) {
+    public static <T> BaseRes<T> err(T model, String msg) {
         return of(model, CodeEnum.ERROR.getCode(), msg);
     }
 }

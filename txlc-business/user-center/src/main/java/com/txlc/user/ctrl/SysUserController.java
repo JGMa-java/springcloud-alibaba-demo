@@ -39,8 +39,8 @@ public class SysUserController {
      */
     @ApiOperation(value = "根据access_token当前登录用户")
     @GetMapping("/users/current")
-    public Result<LoginAppUser> getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
-        return Result.succeed(appUserService.getLoginAppUser(user));
+    public BaseRes<LoginAppUser> getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
+        return BaseRes.ok(appUserService.getLoginAppUser(user));
     }
 
     /**
@@ -135,10 +135,10 @@ public class SysUserController {
             @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "Integer"),
             @ApiImplicitParam(name = "enabled", value = "是否启用", required = true, dataType = "Boolean")
     })
-    public Result updateEnabled(@RequestParam Map<String, Object> params) {
+    public BaseRes updateEnabled(@RequestParam Map<String, Object> params) {
         Long id = MapUtils.getLong(params, "id");
         if (checkAdmin(id)) {
-            return Result.failed(ADMIN_CHANGE_MSG);
+            return BaseRes.err(ADMIN_CHANGE_MSG);
         }
         return appUserService.updateEnabled(params);
     }
@@ -150,24 +150,24 @@ public class SysUserController {
      */
     @PutMapping(value = "/users/{id}/password")
     //@AuditLog(operation = "'重置用户密码:' + #id")
-    public Result resetPassword(@PathVariable Long id) {
+    public BaseRes resetPassword(@PathVariable Long id) {
         if (checkAdmin(id)) {
-            return Result.failed(ADMIN_CHANGE_MSG);
+            return BaseRes.err(ADMIN_CHANGE_MSG);
         }
         appUserService.updatePassword(id, null, null);
-        return Result.succeed("重置成功");
+        return BaseRes.ok("重置成功");
     }
 
     /**
      * 用户自己修改密码
      */
     @PutMapping(value = "/users/password")
-    public Result resetPassword(@RequestBody SysUser sysUser) {
+    public BaseRes resetPassword(@RequestBody SysUser sysUser) {
         if (checkAdmin(sysUser.getId())) {
-            return Result.failed(ADMIN_CHANGE_MSG);
+            return BaseRes.err(ADMIN_CHANGE_MSG);
         }
         appUserService.updatePassword(sysUser.getId(), sysUser.getOldPassword(), sysUser.getNewPassword());
-        return Result.succeed("重置成功");
+        return BaseRes.ok("重置成功");
     }
 
     /**
@@ -177,12 +177,12 @@ public class SysUserController {
      */
     @DeleteMapping(value = "/users/{id}")
     //@AuditLog(operation = "'删除用户:' + #id")
-    public Result delete(@PathVariable Long id) {
+    public BaseRes delete(@PathVariable Long id) {
         if (checkAdmin(id)) {
-            return Result.failed(ADMIN_CHANGE_MSG);
+            return BaseRes.err(ADMIN_CHANGE_MSG);
         }
         appUserService.delUser(id);
-        return Result.succeed("删除成功");
+        return BaseRes.ok("删除成功");
     }
 
 
@@ -195,7 +195,7 @@ public class SysUserController {
     @CacheEvict(value = "user", key = "#sysUser.username")
     @PostMapping("/users/saveOrUpdate")
 //    @AuditLog(operation = "'新增或更新用户:' + #sysUser.username")
-    public Result saveOrUpdate(@RequestBody SysUser sysUser) throws Exception {
+    public BaseRes saveOrUpdate(@RequestBody SysUser sysUser) throws Exception {
         return appUserService.saveOrUpdateUser(sysUser);
     }
 

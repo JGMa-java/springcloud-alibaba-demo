@@ -1,9 +1,7 @@
 package com.txlc.user.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.db.PageResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.txlc.common.constant.CommonConstant;
 import com.txlc.common.lock.DistributedLock;
 import com.txlc.common.model.*;
@@ -158,11 +156,11 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     @Transactional
     @Override
-    public Result updatePassword(Long id, String oldPassword, String newPassword) {
+    public BaseRes updatePassword(Long id, String oldPassword, String newPassword) {
         SysUser sysUser = baseMapper.selectById(id);
         if (StrUtil.isNotBlank(oldPassword)) {
             if (!passwordEncoder.matches(oldPassword, sysUser.getPassword())) {
-                return Result.failed("旧密码错误");
+                return BaseRes.err("旧密码错误");
             }
         }
         if (StrUtil.isBlank(newPassword)) {
@@ -172,7 +170,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         user.setId(id);
         user.setPassword(passwordEncoder.encode(newPassword));
         baseMapper.updateById(user);
-        return Result.succeed("修改成功");
+        return BaseRes.ok("修改成功");
     }
 
     @Override
@@ -181,13 +179,13 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     }
 
     @Override
-    public Result updateEnabled(Map<String, Object> params) {
+    public BaseRes updateEnabled(Map<String, Object> params) {
         Long id = MapUtils.getLong(params, "id");
         Boolean enabled = MapUtils.getBoolean(params, "enabled");
 
         SysUser appUser = baseMapper.selectById(id);
         if (appUser == null) {
-            return Result.failed("用户不存在");
+            return BaseRes.err("用户不存在");
         }
         appUser.setEnabled(enabled);
         appUser.setUpdateTime(new Date());
@@ -195,12 +193,12 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         int i = baseMapper.updateById(appUser);
         log.info("修改用户：{}", appUser);
 
-        return i > 0 ? Result.succeed(appUser, "更新成功") : Result.failed("更新失败");
+        return i > 0 ? BaseRes.ok(appUser, "更新成功") : BaseRes.err("更新失败");
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Result saveOrUpdateUser(SysUser sysUser) throws Exception {
+    public BaseRes saveOrUpdateUser(SysUser sysUser) throws Exception {
         if (sysUser.getId() == null) {
             if (StringUtils.isBlank(sysUser.getType())) {
                 sysUser.setType(UserType.BACKEND.name());
@@ -222,7 +220,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
                 roleUserService.saveBatch(roleUsers);
             }
         }
-        return result ? Result.succeed(sysUser, "操作成功") : Result.failed("操作失败");
+        return result ? BaseRes.ok(sysUser, "操作成功") : BaseRes.err("操作失败");
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -18,6 +18,7 @@
         <module>txlc-db-spring-boot-starter</module>
         <module>txlc-swagger2-spring-boot-starter</module>
         <module>txlc-log-spring-boot-starter</module>
+        <module>txlc-config</module>
     </modules>
 
 </project>

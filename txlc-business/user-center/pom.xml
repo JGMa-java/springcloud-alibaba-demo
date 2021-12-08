@@ -18,6 +18,11 @@
         </dependency>
         <dependency>
             <groupId>com.txlc</groupId>
+            <artifactId>txlc-config</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.txlc</groupId>
             <artifactId>txlc-db-spring-boot-starter</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

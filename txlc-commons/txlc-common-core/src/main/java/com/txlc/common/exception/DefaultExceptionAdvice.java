@@ -1,6 +1,6 @@
 package com.txlc.common.exception;
 
-import com.txlc.common.model.Result;
+import com.txlc.common.model.BaseRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -26,7 +26,7 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class})
-    public Result badRequestException(IllegalArgumentException e) {
+    public BaseRes badRequestException(IllegalArgumentException e) {
         return defHandler("参数解析失败", e);
     }
 
@@ -36,7 +36,7 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({AccessDeniedException.class})
-    public Result badMethodExpressException(AccessDeniedException e) {
+    public BaseRes badMethodExpressException(AccessDeniedException e) {
         return defHandler("没有权限请求当前方法", e);
     }
 
@@ -45,7 +45,7 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-    public Result handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public BaseRes handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         return defHandler("不支持当前请求方法", e);
     }
 
@@ -54,7 +54,7 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
-    public Result handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+    public BaseRes handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
         return defHandler("不支持当前媒体类型", e);
     }
 
@@ -64,7 +64,7 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({SQLException.class})
-    public Result handleSQLException(SQLException e) {
+    public BaseRes handleSQLException(SQLException e) {
         return defHandler("服务运行SQLException异常", e);
     }
 
@@ -74,7 +74,7 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(com.txlc.common.exception.BusinessException.class)
-    public Result handleException(com.txlc.common.exception.BusinessException e) {
+    public BaseRes handleException(com.txlc.common.exception.BusinessException e) {
         return defHandler("业务异常", e);
     }
 
@@ -84,8 +84,8 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(IdempotencyException.class)
-    public Result handleException(IdempotencyException e) {
-        return Result.failed(e.getMessage());
+    public BaseRes handleException(IdempotencyException e) {
+        return BaseRes.err(e.getMessage());
     }
 
     /**
@@ -94,12 +94,12 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public Result handleException(Exception e) {
+    public BaseRes handleException(Exception e) {
         return defHandler("未知异常", e);
     }
 
-    private Result defHandler(String msg, Exception e) {
+    private BaseRes defHandler(String msg, Exception e) {
         log.error(msg, e);
-        return Result.failed(msg);
+        return BaseRes.err(msg);
     }
 }

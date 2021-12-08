@@ -1,9 +1,8 @@
 package com.txlc.user.service;
 
 
-import cn.hutool.db.PageResult;
 import com.txlc.common.model.LoginAppUser;
-import com.txlc.common.model.Result;
+import com.txlc.common.model.BaseRes;
 import com.txlc.common.model.SysRole;
 import com.txlc.common.model.SysUser;
 import com.txlc.common.service.ISuperService;
@@ -70,7 +69,7 @@ public interface ISysUserService extends ISuperService<SysUser> {
 	 * @param newPassword
 	 * @return
 	 */
-	Result updatePassword(Long id, String oldPassword, String newPassword);
+	BaseRes updatePassword(Long id, String oldPassword, String newPassword);
 
 
 
@@ -86,10 +85,10 @@ public interface ISysUserService extends ISuperService<SysUser> {
 	 * @param params
 	 * @return
 	 */
-	Result updateEnabled(Map<String, Object> params);
+	BaseRes updateEnabled(Map<String, Object> params);
 
 
-	Result saveOrUpdateUser(SysUser sysUser) throws Exception;
+	BaseRes saveOrUpdateUser(SysUser sysUser) throws Exception;
 
 	/**
 	 * 删除用户
