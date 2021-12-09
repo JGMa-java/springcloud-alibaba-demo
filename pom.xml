@@ -15,7 +15,6 @@
         <module>nacos-provider</module>
         <module>nacos-consuer</module>
         <module>txlc-business</module>
-        <module>txlc-config</module>
         <module>config-demo</module>
 
     </modules>
