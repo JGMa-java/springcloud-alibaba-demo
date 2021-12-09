@@ -13,9 +13,18 @@ public class ConsumerController {
     @Autowired
     RestTemplate restTemplate;
 
+//    @Autowired
+//    ProviderFeignClient providerFeignClient;
+
+    // restTemplate方式调用服务
     @GetMapping("/hi-restTemplate")
     public String hiResttemplate() {
         return restTemplate.getForObject("http://nacos-provider/hi?name=resttemplate", String.class);
 
     }
+
+//    @GetMapping("/hi-feign")
+//    public String hiFeign(){
+//        return providerFeignClient.hi("通过feignd调用");
+//    }
 }

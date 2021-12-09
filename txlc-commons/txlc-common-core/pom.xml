@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <optional>true</optional>
+            <optional>true</optional><!-- 防止将mybatis-plus依赖传递到其他模块中 -->
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
