@@ -23,8 +23,16 @@ public class ConfigDemoApplication {
     @Value("${txlc.config.text}")
     private String config;
 
+    @Value("${txlc.common.config.text}")
+    private String commonText;
+
     @RequestMapping("/getValue")
     public String getValue() {
         return config;
+    }
+
+    @RequestMapping("/getCommonValue")
+    public String getCommonValue() {
+        return commonText;
     }
 }

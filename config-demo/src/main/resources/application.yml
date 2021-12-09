@@ -1,3 +1,6 @@
-#txlc:
-#  config:
-#    text: 配置中心demo
+txlc:
+  config:
+    text: 配置中心demo_local
+  common:
+    config:
+      text: common配置_local
