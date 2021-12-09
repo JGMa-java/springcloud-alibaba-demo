@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * 调用nacos-provider的服务
  */
-//@FeignClient("nacos-provider")
-//public interface ProviderFeignClient {
-//    @GetMapping("/hi")
-//    String hi(@RequestParam(value = "name", defaultValue = "feignDemo", required = false) String name);
-//}
+@FeignClient("nacos-provider")
+public interface ProviderFeignClient {
+    @GetMapping("/hi")
+    String hi(@RequestParam(value = "name", defaultValue = "feignDemo", required = false) String name);
+}

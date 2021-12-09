@@ -8,10 +8,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.txlc</groupId>
     <artifactId>nacos-provider</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
     <name>nacos-provider</name>
     <description>nacos-provider nacos服务提供者</description>
 
@@ -21,8 +19,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
+            <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <optional>true</optional>
+            <!-- 使用spring loadbalancer，弃用ribbon -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
