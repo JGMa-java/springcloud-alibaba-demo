@@ -1,0 +1,16 @@
+server:
+  port: 7001
+spring:
+  application:
+    name: user-center
+  datasource:
+    druid:
+      url: ${txlc.datasource.url}
+      username: ${txlc.datasource.username}
+      password: ${txlc.datasource.password}
+      driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      config:
+        file-extension: yml

@@ -1,8 +1,8 @@
 spring:
-  profiles:
-    active: dev
+  application:
+    name: config-demo
   cloud:
     nacos:
       server-addr: localhost:8848
       config:
-        file-extension: yaml
+        file-extension: yml
