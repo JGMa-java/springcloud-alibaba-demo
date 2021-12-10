@@ -27,7 +27,8 @@
         <mybatis-plus-boot-starter.version>3.4.2</mybatis-plus-boot-starter.version>
 <!--        <mysql-connector-java.version>8.0.13</mysql-connector-java.version>-->
         <mysql-connector-java.version>5.1.46</mysql-connector-java.version>
-        <redis-starter.version>2.3.2.RELEASE</redis-starter.version>
+<!--        <redis-starter.version>2.3.2.RELEASE</redis-starter.version>-->
+        <redis-starter.version>2.5.7</redis-starter.version>
         <hutool.version>5.1.4</hutool.version>
         <banner.version>1.0.2</banner.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
@@ -161,10 +162,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
+        <!-- Apache Log4j 2.x <= 2.14.1存在漏洞，需要版本2.15.0-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-to-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
