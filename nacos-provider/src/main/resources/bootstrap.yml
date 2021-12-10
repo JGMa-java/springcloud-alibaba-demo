@@ -7,3 +7,8 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+        #curl -X PUT '$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=serverMode&value=CP'
+        #是否是临时实例
+        #非临时实例和临时实例心跳机制不一样
+        #非临时实例挂掉后不会被nacos剔除，而是等待他重连
+        ephemeral: false
