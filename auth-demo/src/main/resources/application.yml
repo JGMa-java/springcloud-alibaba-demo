@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: auth-demo
+  security:
+    user:
+      name: user
+      password: 123456
+      roles: ADMIN
